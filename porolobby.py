@@ -1,6 +1,11 @@
 #! python3
-
+import random
 from lcu_driver import Connector
+
+#list of available bots
+bot_list = [12, 32, 1, 22, 53, 63, 51, 69, 31, 122, 119, 36, 81, 9, 3, 86, 104,
+            24, 30, 10, 96, 89, 236, 99, 54, 11, 21, 62, 25, 75, 76, 33, 58, 13,
+            98, 102, 15, 16, 44, 18, 48, 77, 45, 8, 19, 115, 26, 143]
 
 connector = Connector()
 
@@ -44,10 +49,10 @@ async def executeAddBot(connection, data):
 
 # Selects which bots to add and adds them to an existing lobby
 async def addBots(connection):
-    ids = [1, 3, 8, 10, 11]
-
+    ids_Player_Team = random.choices(bot_list, k=4)
+    ids_Enemy_Team = random.choices(bot_list, k=5)
     # add bots to the player's team
-    for id in ids[:4]:
+    for id in ids_Player_Team:
         data = {
             "botDifficulty": "EASY",
             "championId": id,
@@ -56,9 +61,9 @@ async def addBots(connection):
         await executeAddBot(connection, data)
 
     # add bots to the opposite team
-    for id in ids:
+    for id in ids_Enemy_Team:
         data = {
-            "botDifficulty": "EASY",
+            "botDifficulty": "MEDIUM",
             "championId": id,
             "teamId": "200"
         }
